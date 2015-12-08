@@ -1,0 +1,6 @@
+VARIABLES
+SatisfyUsers,MinimizeCostPerUser,IncreaseProfits
+PREFERENCES
+{SatisfyUsers};{}:{MinimizeCostPerUser};{IncreaseProfits}
+{IncreaseProfits};{}:{MinimizeCostPerUser};{SatisfyUsers}
+{};{MinimizeCostPerUser}:{SatisfyUsers};{IncreaseProfits}

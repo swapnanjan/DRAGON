@@ -1,0 +1,10 @@
+# Auto Genrated File with random parameters for the Model
+# Very Lo=1, Lo=2, Lo Med=3, Hi Med=4, Hi=5, Very Hi=6
+# Root Node always has configuration: [7,7,7]
+START
+trust(2-1):[3,4,4]
+trust(1-0):[6,5,4]
+rsh_c(1-2):[3,4,6]
+rsh_c(0-1):[2,3,2]
+ssh_c(0-1):[6,5,1]
+END

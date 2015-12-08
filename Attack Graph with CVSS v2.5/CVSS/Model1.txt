@@ -1,0 +1,7 @@
+# Lo=1, Lo-Med=2, Med=3, Hi-Med=4, Hi=5, Very-Hi=6
+# Root Node always has configuration: [7,7,7]
+START
+p1:[7,7,7]
+p2:[3,3,3]
+p3:[1,1,3]
+END

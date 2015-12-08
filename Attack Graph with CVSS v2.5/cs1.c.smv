@@ -1,0 +1,58 @@
+MODULE main
+
+VAR
+  HappyCustomer : {0,1};
+  ReduceTransactionCosts : {0,1};
+  PaymentTraceability : {0,1};
+  UseRobustLegalDocumentation : {0,1};
+  chHappyCustomer : {0,1};
+  chReduceTransactionCosts : {0,1};
+  chPaymentTraceability : {0,1};
+  chUseRobustLegalDocumentation : {0,1};
+  gch : {0,1};
+
+ASSIGN
+  next(HappyCustomer) :=
+    case
+      HappyCustomer=0 & chHappyCustomer=1 & ((ReduceTransactionCosts=1 & chReduceTransactionCosts=1) | (ReduceTransactionCosts=0 & chReduceTransactionCosts=0)) & ((PaymentTraceability=1 & chPaymentTraceability=1) | (PaymentTraceability=0 & chPaymentTraceability=0)) & ((UseRobustLegalDocumentation=1 & chUseRobustLegalDocumentation=1) | (UseRobustLegalDocumentation=0 & chUseRobustLegalDocumentation=0)): 1;
+      UseRobustLegalDocumentation=0 & HappyCustomer=1 & chHappyCustomer=1 & ReduceTransactionCosts=1 & chReduceTransactionCosts=1 & PaymentTraceability=0 & chPaymentTraceability=1 & chHappyCustomer=1 & chReduceTransactionCosts=1 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=0: 0;
+      TRUE: HappyCustomer;
+    esac;
+  next(ReduceTransactionCosts) :=
+    case
+      ReduceTransactionCosts=0 & chReduceTransactionCosts=1 & ((HappyCustomer=1 & chHappyCustomer=1) | (HappyCustomer=0 & chHappyCustomer=0)) & ((PaymentTraceability=1 & chPaymentTraceability=1) | (PaymentTraceability=0 & chPaymentTraceability=0)) & ((UseRobustLegalDocumentation=1 & chUseRobustLegalDocumentation=1) | (UseRobustLegalDocumentation=0 & chUseRobustLegalDocumentation=0)): 1;
+      UseRobustLegalDocumentation=1 & ReduceTransactionCosts=1 & chReduceTransactionCosts=1 & PaymentTraceability=0 & chPaymentTraceability=1 & chHappyCustomer=0 & chReduceTransactionCosts=1 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=0: 0;
+      UseRobustLegalDocumentation=0 & HappyCustomer=1 & chHappyCustomer=1 & ReduceTransactionCosts=1 & chReduceTransactionCosts=1 & PaymentTraceability=0 & chPaymentTraceability=1 & chHappyCustomer=1 & chReduceTransactionCosts=1 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=0: 0;
+      TRUE: ReduceTransactionCosts;
+    esac;
+  next(PaymentTraceability) :=
+    case
+      PaymentTraceability=0 & chPaymentTraceability=1 & ((HappyCustomer=1 & chHappyCustomer=1) | (HappyCustomer=0 & chHappyCustomer=0)) & ((ReduceTransactionCosts=1 & chReduceTransactionCosts=1) | (ReduceTransactionCosts=0 & chReduceTransactionCosts=0)) & ((UseRobustLegalDocumentation=1 & chUseRobustLegalDocumentation=1) | (UseRobustLegalDocumentation=0 & chUseRobustLegalDocumentation=0)): 1;
+      UseRobustLegalDocumentation=1 & ReduceTransactionCosts=1 & chReduceTransactionCosts=1 & PaymentTraceability=0 & chPaymentTraceability=1 & chHappyCustomer=0 & chReduceTransactionCosts=1 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=0: 1;
+      ReduceTransactionCosts=1 & HappyCustomer=0 & PaymentTraceability=1 & chPaymentTraceability=1 & UseRobustLegalDocumentation=0 & chUseRobustLegalDocumentation=1 & chHappyCustomer=0 & chReduceTransactionCosts=0 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=1: 0;
+      UseRobustLegalDocumentation=0 & HappyCustomer=1 & chHappyCustomer=1 & ReduceTransactionCosts=1 & chReduceTransactionCosts=1 & PaymentTraceability=0 & chPaymentTraceability=1 & chHappyCustomer=1 & chReduceTransactionCosts=1 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=0: 1;
+      TRUE: PaymentTraceability;
+    esac;
+  next(UseRobustLegalDocumentation) :=
+    case
+      UseRobustLegalDocumentation=0 & chUseRobustLegalDocumentation=1 & ((HappyCustomer=1 & chHappyCustomer=1) | (HappyCustomer=0 & chHappyCustomer=0)) & ((ReduceTransactionCosts=1 & chReduceTransactionCosts=1) | (ReduceTransactionCosts=0 & chReduceTransactionCosts=0)) & ((PaymentTraceability=1 & chPaymentTraceability=1) | (PaymentTraceability=0 & chPaymentTraceability=0)): 1;
+      ReduceTransactionCosts=1 & HappyCustomer=0 & PaymentTraceability=1 & chPaymentTraceability=1 & UseRobustLegalDocumentation=0 & chUseRobustLegalDocumentation=1 & chHappyCustomer=0 & chReduceTransactionCosts=0 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=1: 1;
+      TRUE: UseRobustLegalDocumentation;
+    esac;
+  init(gch) := 0;
+  next(gch) :=
+    case
+      gch=1: 0;
+      HappyCustomer=0 & chHappyCustomer=1 & ((ReduceTransactionCosts=1 & chReduceTransactionCosts=1) | (ReduceTransactionCosts=0 & chReduceTransactionCosts=0)) & ((PaymentTraceability=1 & chPaymentTraceability=1) | (PaymentTraceability=0 & chPaymentTraceability=0)) & ((UseRobustLegalDocumentation=1 & chUseRobustLegalDocumentation=1) | (UseRobustLegalDocumentation=0 & chUseRobustLegalDocumentation=0)): 1;
+      UseRobustLegalDocumentation=0 & HappyCustomer=1 & chHappyCustomer=1 & ReduceTransactionCosts=1 & chReduceTransactionCosts=1 & PaymentTraceability=0 & chPaymentTraceability=1 & chHappyCustomer=1 & chReduceTransactionCosts=1 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=0: 1;
+      ReduceTransactionCosts=0 & chReduceTransactionCosts=1 & ((HappyCustomer=1 & chHappyCustomer=1) | (HappyCustomer=0 & chHappyCustomer=0)) & ((PaymentTraceability=1 & chPaymentTraceability=1) | (PaymentTraceability=0 & chPaymentTraceability=0)) & ((UseRobustLegalDocumentation=1 & chUseRobustLegalDocumentation=1) | (UseRobustLegalDocumentation=0 & chUseRobustLegalDocumentation=0)): 1;
+      UseRobustLegalDocumentation=1 & ReduceTransactionCosts=1 & chReduceTransactionCosts=1 & PaymentTraceability=0 & chPaymentTraceability=1 & chHappyCustomer=0 & chReduceTransactionCosts=1 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=0: 1;
+      UseRobustLegalDocumentation=0 & HappyCustomer=1 & chHappyCustomer=1 & ReduceTransactionCosts=1 & chReduceTransactionCosts=1 & PaymentTraceability=0 & chPaymentTraceability=1 & chHappyCustomer=1 & chReduceTransactionCosts=1 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=0: 1;
+      PaymentTraceability=0 & chPaymentTraceability=1 & ((HappyCustomer=1 & chHappyCustomer=1) | (HappyCustomer=0 & chHappyCustomer=0)) & ((ReduceTransactionCosts=1 & chReduceTransactionCosts=1) | (ReduceTransactionCosts=0 & chReduceTransactionCosts=0)) & ((UseRobustLegalDocumentation=1 & chUseRobustLegalDocumentation=1) | (UseRobustLegalDocumentation=0 & chUseRobustLegalDocumentation=0)): 1;
+      UseRobustLegalDocumentation=1 & ReduceTransactionCosts=1 & chReduceTransactionCosts=1 & PaymentTraceability=0 & chPaymentTraceability=1 & chHappyCustomer=0 & chReduceTransactionCosts=1 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=0: 1;
+      ReduceTransactionCosts=1 & HappyCustomer=0 & PaymentTraceability=1 & chPaymentTraceability=1 & UseRobustLegalDocumentation=0 & chUseRobustLegalDocumentation=1 & chHappyCustomer=0 & chReduceTransactionCosts=0 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=1: 1;
+      UseRobustLegalDocumentation=0 & HappyCustomer=1 & chHappyCustomer=1 & ReduceTransactionCosts=1 & chReduceTransactionCosts=1 & PaymentTraceability=0 & chPaymentTraceability=1 & chHappyCustomer=1 & chReduceTransactionCosts=1 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=0: 1;
+      UseRobustLegalDocumentation=0 & chUseRobustLegalDocumentation=1 & ((HappyCustomer=1 & chHappyCustomer=1) | (HappyCustomer=0 & chHappyCustomer=0)) & ((ReduceTransactionCosts=1 & chReduceTransactionCosts=1) | (ReduceTransactionCosts=0 & chReduceTransactionCosts=0)) & ((PaymentTraceability=1 & chPaymentTraceability=1) | (PaymentTraceability=0 & chPaymentTraceability=0)): 1;
+      ReduceTransactionCosts=1 & HappyCustomer=0 & PaymentTraceability=1 & chPaymentTraceability=1 & UseRobustLegalDocumentation=0 & chUseRobustLegalDocumentation=1 & chHappyCustomer=0 & chReduceTransactionCosts=0 & chPaymentTraceability=1 & chUseRobustLegalDocumentation=1: 1;
+      TRUE: 0;
+    esac;

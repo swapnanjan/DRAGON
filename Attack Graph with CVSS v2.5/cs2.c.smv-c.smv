@@ -1,0 +1,50 @@
+MODULE main
+
+VAR
+  SatisfyUsers : {0,1};
+  MinimizeCostPerUser : {0,1};
+  IncreaseProfits : {0,1};
+  chSatisfyUsers : {0,1};
+  chMinimizeCostPerUser : {0,1};
+  chIncreaseProfits : {0,1};
+  gch : {0,1};
+
+ASSIGN
+  next(SatisfyUsers) :=
+    case
+      SatisfyUsers=0 & chSatisfyUsers=1 & ((MinimizeCostPerUser=1 & chMinimizeCostPerUser=1) | (MinimizeCostPerUser=0 & chMinimizeCostPerUser=0)) & ((IncreaseProfits=1 & chIncreaseProfits=1) | (IncreaseProfits=0 & chIncreaseProfits=0)): 1;
+      IncreaseProfits=1 & SatisfyUsers=1 & chSatisfyUsers=1 & MinimizeCostPerUser=0 & chMinimizeCostPerUser=1 & chSatisfyUsers=1 & chMinimizeCostPerUser=1 & chIncreaseProfits=0: 0;
+      MinimizeCostPerUser=0 & IncreaseProfits=1 & chIncreaseProfits=1 & SatisfyUsers=0 & chSatisfyUsers=1 & chSatisfyUsers=1 & chMinimizeCostPerUser=0 & chIncreaseProfits=1: 1;
+      TRUE: SatisfyUsers;
+    esac;
+  next(MinimizeCostPerUser) :=
+    case
+      MinimizeCostPerUser=0 & chMinimizeCostPerUser=1 & ((SatisfyUsers=1 & chSatisfyUsers=1) | (SatisfyUsers=0 & chSatisfyUsers=0)) & ((IncreaseProfits=1 & chIncreaseProfits=1) | (IncreaseProfits=0 & chIncreaseProfits=0)): 1;
+      SatisfyUsers=1 & IncreaseProfits=1 & chIncreaseProfits=1 & MinimizeCostPerUser=0 & chMinimizeCostPerUser=1 & chSatisfyUsers=0 & chMinimizeCostPerUser=1 & chIncreaseProfits=1: 1;
+      IncreaseProfits=1 & SatisfyUsers=1 & chSatisfyUsers=1 & MinimizeCostPerUser=0 & chMinimizeCostPerUser=1 & chSatisfyUsers=1 & chMinimizeCostPerUser=1 & chIncreaseProfits=0: 1;
+      TRUE: MinimizeCostPerUser;
+    esac;
+  next(IncreaseProfits) :=
+    case
+      IncreaseProfits=0 & chIncreaseProfits=1 & ((SatisfyUsers=1 & chSatisfyUsers=1) | (SatisfyUsers=0 & chSatisfyUsers=0)) & ((MinimizeCostPerUser=1 & chMinimizeCostPerUser=1) | (MinimizeCostPerUser=0 & chMinimizeCostPerUser=0)): 1;
+      SatisfyUsers=1 & IncreaseProfits=1 & chIncreaseProfits=1 & MinimizeCostPerUser=0 & chMinimizeCostPerUser=1 & chSatisfyUsers=0 & chMinimizeCostPerUser=1 & chIncreaseProfits=1: 0;
+      MinimizeCostPerUser=0 & IncreaseProfits=1 & chIncreaseProfits=1 & SatisfyUsers=0 & chSatisfyUsers=1 & chSatisfyUsers=1 & chMinimizeCostPerUser=0 & chIncreaseProfits=1: 0;
+      TRUE: IncreaseProfits;
+    esac;
+  init(gch) := 0;
+  next(gch) :=
+    case
+      gch=1: 0;
+      SatisfyUsers=0 & chSatisfyUsers=1 & ((MinimizeCostPerUser=1 & chMinimizeCostPerUser=1) | (MinimizeCostPerUser=0 & chMinimizeCostPerUser=0)) & ((IncreaseProfits=1 & chIncreaseProfits=1) | (IncreaseProfits=0 & chIncreaseProfits=0)): 1;
+      IncreaseProfits=1 & SatisfyUsers=1 & chSatisfyUsers=1 & MinimizeCostPerUser=0 & chMinimizeCostPerUser=1 & chSatisfyUsers=1 & chMinimizeCostPerUser=1 & chIncreaseProfits=0: 1;
+      MinimizeCostPerUser=0 & IncreaseProfits=1 & chIncreaseProfits=1 & SatisfyUsers=0 & chSatisfyUsers=1 & chSatisfyUsers=1 & chMinimizeCostPerUser=0 & chIncreaseProfits=1: 1;
+      MinimizeCostPerUser=0 & chMinimizeCostPerUser=1 & ((SatisfyUsers=1 & chSatisfyUsers=1) | (SatisfyUsers=0 & chSatisfyUsers=0)) & ((IncreaseProfits=1 & chIncreaseProfits=1) | (IncreaseProfits=0 & chIncreaseProfits=0)): 1;
+      SatisfyUsers=1 & IncreaseProfits=1 & chIncreaseProfits=1 & MinimizeCostPerUser=0 & chMinimizeCostPerUser=1 & chSatisfyUsers=0 & chMinimizeCostPerUser=1 & chIncreaseProfits=1: 1;
+      IncreaseProfits=1 & SatisfyUsers=1 & chSatisfyUsers=1 & MinimizeCostPerUser=0 & chMinimizeCostPerUser=1 & chSatisfyUsers=1 & chMinimizeCostPerUser=1 & chIncreaseProfits=0: 1;
+      IncreaseProfits=0 & chIncreaseProfits=1 & ((SatisfyUsers=1 & chSatisfyUsers=1) | (SatisfyUsers=0 & chSatisfyUsers=0)) & ((MinimizeCostPerUser=1 & chMinimizeCostPerUser=1) | (MinimizeCostPerUser=0 & chMinimizeCostPerUser=0)): 1;
+      SatisfyUsers=1 & IncreaseProfits=1 & chIncreaseProfits=1 & MinimizeCostPerUser=0 & chMinimizeCostPerUser=1 & chSatisfyUsers=0 & chMinimizeCostPerUser=1 & chIncreaseProfits=1: 1;
+      MinimizeCostPerUser=0 & IncreaseProfits=1 & chIncreaseProfits=1 & SatisfyUsers=0 & chSatisfyUsers=1 & chSatisfyUsers=1 & chMinimizeCostPerUser=0 & chIncreaseProfits=1: 1;
+      TRUE: 0;
+    esac;
+
+SPEC EF (gch=1)

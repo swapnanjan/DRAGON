@@ -1,0 +1,18 @@
+# Auto Generated Attack Graph file from .gml file
+pnodes : p1, p2;
+enodes : e1, e2, e3;
+lnodes : c3, c1, c2;
+root : p1
+goals:
+p1-->e1;
+p1-->e2;
+e1-->p2;
+e2-->p2;
+p2-->e3;
+sloag
+leaves:
+e1-->c1;
+e2-->c2;
+e3-->c3;
+sevael
+END

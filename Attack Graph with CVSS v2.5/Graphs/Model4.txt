@@ -1,0 +1,12 @@
+pnodes : p1, p3;
+enodes : p2;
+lnodes : vul1, vul2, vul3, vul4;
+root : p1;
+goals:
+p1-->p2, p3;
+sloag
+leaves:
+p2-->vul1, vul2;
+p3-->vul3, vul4;
+sevael
+END

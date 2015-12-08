@@ -1,0 +1,12 @@
+# Auto Genrated File with random parameters for the Model
+# Very Lo=1, Lo=2, Lo Med=3, Hi Med=4, Hi=5, Very Hi=6
+# Root Node always has configuration: [7,7,7]
+START
+p2:[6,2,2]
+p4:[6,3,3]
+c1:[1,1,1]
+c3:[3,6,4]
+c6:[6,1,5]
+c7:[2,6,4]
+c9:[5,4,1]
+END

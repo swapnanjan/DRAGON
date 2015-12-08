@@ -1,0 +1,5 @@
+VARIABLES
+TrackSiteUsePatterns,ReduceCosts,EnsureUniformExperience
+PREFERENCES
+{};{}:{ReduceCosts};{EnsureUniformExperience}
+{EnsureUniformExperience};{}:{TrackSiteUsePatterns};{ReduceCosts}

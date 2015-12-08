@@ -1,0 +1,6 @@
+VARIABLES
+HappyCustomer,ReduceTransactionCosts,PaymentTraceability,UseRobustLegalDocumentation
+PREFERENCES
+{UseRobustLegalDocumentation};{}:{PaymentTraceability};{ReduceTransactionCosts}
+{ReduceTransactionCosts};{HappyCustomer}:{UseRobustLegalDocumentation};{PaymentTraceability}
+{};{UseRobustLegalDocumentation}:{PaymentTraceability};{HappyCustomer,ReduceTransactionCosts}

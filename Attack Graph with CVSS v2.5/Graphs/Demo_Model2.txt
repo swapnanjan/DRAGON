@@ -1,0 +1,23 @@
+# This is an example input file
+pnodes : p1, p2, p3;
+enodes : e1, e2, e3, e4;
+lnodes : c1, c2, c3, c4, c5, c6;
+root : p1;
+goals:
+p1-->e1, e2, e3;
+e1-->p2;
+e2-->p2, p3;
+p2-->e4;
+e3-->p3;
+sloag
+leaves:
+e1-->c1;
+e2-->c2;
+e3-->c4;
+p3-->c5, c6;
+e4-->c3;
+sevael
+END
+
+
+

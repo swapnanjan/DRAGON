@@ -1,0 +1,46 @@
+MODULE main
+
+VAR
+  TrackSiteUsePatterns : {0,1};
+  ReduceCosts : {0,1};
+  EnsureUniformExperience : {0,1};
+  chTrackSiteUsePatterns : {0,1};
+  chReduceCosts : {0,1};
+  chEnsureUniformExperience : {0,1};
+  gch : {0,1};
+
+ASSIGN
+  next(TrackSiteUsePatterns) :=
+    case
+      TrackSiteUsePatterns=0 & chTrackSiteUsePatterns=1 & ((ReduceCosts=1 & chReduceCosts=1) | (ReduceCosts=0 & chReduceCosts=0)) & ((EnsureUniformExperience=1 & chEnsureUniformExperience=1) | (EnsureUniformExperience=0 & chEnsureUniformExperience=0)): 1;
+      EnsureUniformExperience=1 & ReduceCosts=1 & chReduceCosts=1 & TrackSiteUsePatterns=0 & chTrackSiteUsePatterns=1 & chTrackSiteUsePatterns=1 & chReduceCosts=1 & chEnsureUniformExperience=0: 1;
+      TRUE: TrackSiteUsePatterns;
+    esac;
+  next(ReduceCosts) :=
+    case
+      ReduceCosts=0 & chReduceCosts=1 & ((TrackSiteUsePatterns=1 & chTrackSiteUsePatterns=1) | (TrackSiteUsePatterns=0 & chTrackSiteUsePatterns=0)) & ((EnsureUniformExperience=1 & chEnsureUniformExperience=1) | (EnsureUniformExperience=0 & chEnsureUniformExperience=0)): 1;
+      EnsureUniformExperience=1 & chEnsureUniformExperience=1 & ReduceCosts=0 & chReduceCosts=1 & chTrackSiteUsePatterns=0 & chReduceCosts=1 & chEnsureUniformExperience=1: 1;
+      EnsureUniformExperience=1 & ReduceCosts=1 & chReduceCosts=1 & TrackSiteUsePatterns=0 & chTrackSiteUsePatterns=1 & chTrackSiteUsePatterns=1 & chReduceCosts=1 & chEnsureUniformExperience=0: 0;
+      TRUE: ReduceCosts;
+    esac;
+  next(EnsureUniformExperience) :=
+    case
+      EnsureUniformExperience=0 & chEnsureUniformExperience=1 & ((TrackSiteUsePatterns=1 & chTrackSiteUsePatterns=1) | (TrackSiteUsePatterns=0 & chTrackSiteUsePatterns=0)) & ((ReduceCosts=1 & chReduceCosts=1) | (ReduceCosts=0 & chReduceCosts=0)): 1;
+      EnsureUniformExperience=1 & chEnsureUniformExperience=1 & ReduceCosts=0 & chReduceCosts=1 & chTrackSiteUsePatterns=0 & chReduceCosts=1 & chEnsureUniformExperience=1: 0;
+      TRUE: EnsureUniformExperience;
+    esac;
+  init(gch) := 0;
+  next(gch) :=
+    case
+      gch=1: 0;
+      TrackSiteUsePatterns=0 & chTrackSiteUsePatterns=1 & ((ReduceCosts=1 & chReduceCosts=1) | (ReduceCosts=0 & chReduceCosts=0)) & ((EnsureUniformExperience=1 & chEnsureUniformExperience=1) | (EnsureUniformExperience=0 & chEnsureUniformExperience=0)): 1;
+      EnsureUniformExperience=1 & ReduceCosts=1 & chReduceCosts=1 & TrackSiteUsePatterns=0 & chTrackSiteUsePatterns=1 & chTrackSiteUsePatterns=1 & chReduceCosts=1 & chEnsureUniformExperience=0: 1;
+      ReduceCosts=0 & chReduceCosts=1 & ((TrackSiteUsePatterns=1 & chTrackSiteUsePatterns=1) | (TrackSiteUsePatterns=0 & chTrackSiteUsePatterns=0)) & ((EnsureUniformExperience=1 & chEnsureUniformExperience=1) | (EnsureUniformExperience=0 & chEnsureUniformExperience=0)): 1;
+      EnsureUniformExperience=1 & chEnsureUniformExperience=1 & ReduceCosts=0 & chReduceCosts=1 & chTrackSiteUsePatterns=0 & chReduceCosts=1 & chEnsureUniformExperience=1: 1;
+      EnsureUniformExperience=1 & ReduceCosts=1 & chReduceCosts=1 & TrackSiteUsePatterns=0 & chTrackSiteUsePatterns=1 & chTrackSiteUsePatterns=1 & chReduceCosts=1 & chEnsureUniformExperience=0: 1;
+      EnsureUniformExperience=0 & chEnsureUniformExperience=1 & ((TrackSiteUsePatterns=1 & chTrackSiteUsePatterns=1) | (TrackSiteUsePatterns=0 & chTrackSiteUsePatterns=0)) & ((ReduceCosts=1 & chReduceCosts=1) | (ReduceCosts=0 & chReduceCosts=0)): 1;
+      EnsureUniformExperience=1 & chEnsureUniformExperience=1 & ReduceCosts=0 & chReduceCosts=1 & chTrackSiteUsePatterns=0 & chReduceCosts=1 & chEnsureUniformExperience=1: 1;
+      TRUE: 0;
+    esac;
+
+SPEC EF (gch=1)

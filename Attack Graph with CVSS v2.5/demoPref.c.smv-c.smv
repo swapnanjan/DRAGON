@@ -1,0 +1,84 @@
+MODULE main
+
+VAR
+  c1 : {0,1};
+  c2 : {0,1};
+  c3 : {0,1};
+  c4 : {0,1};
+  chc1 : {0,1};
+  chc2 : {0,1};
+  chc3 : {0,1};
+  chc4 : {0,1};
+  gch : {0,1};
+
+ASSIGN
+  next(c1) :=
+    case
+      c1=0 & chc1=1 & ((c2=1 & chc2=1) | (c2=0 & chc2=0)) & ((c3=1 & chc3=1) | (c3=0 & chc3=0)) & ((c4=1 & chc4=1) | (c4=0 & chc4=0)): 1;
+      c3=1 & c1=1 & chc1=1 & c2=1 & chc2=1 & c4=0 & chc4=1 & chc1=1 & chc2=1 & chc3=0 & chc4=1: 0;
+      TRUE: c1;
+    esac;
+  next(c2) :=
+    case
+      c2=0 & chc2=1 & ((c1=1 & chc1=1) | (c1=0 & chc1=0)) & ((c3=1 & chc3=1) | (c3=0 & chc3=0)) & ((c4=1 & chc4=1) | (c4=0 & chc4=0)): 1;
+      c3=1 & c1=1 & chc1=1 & c2=1 & chc2=1 & c4=0 & chc4=1 & chc1=1 & chc2=1 & chc3=0 & chc4=1: 0;
+      TRUE: c2;
+    esac;
+  next(c3) :=
+    case
+      c3=0 & chc3=1 & ((c1=1 & chc1=1) | (c1=0 & chc1=0)) & ((c2=1 & chc2=1) | (c2=0 & chc2=0)) & ((c4=1 & chc4=1) | (c4=0 & chc4=0)): 1;
+      TRUE: c3;
+    esac;
+  next(c4) :=
+    case
+      c4=0 & chc4=1 & ((c1=1 & chc1=1) | (c1=0 & chc1=0)) & ((c2=1 & chc2=1) | (c2=0 & chc2=0)) & ((c3=1 & chc3=1) | (c3=0 & chc3=0)): 1;
+      c3=1 & c1=1 & chc1=1 & c2=1 & chc2=1 & c4=0 & chc4=1 & chc1=1 & chc2=1 & chc3=0 & chc4=1: 1;
+      TRUE: c4;
+    esac;
+  init(gch) := 0;
+  next(gch) :=
+    case
+      gch=1: 0;
+      c1=0 & chc1=1 & ((c2=1 & chc2=1) | (c2=0 & chc2=0)) & ((c3=1 & chc3=1) | (c3=0 & chc3=0)) & ((c4=1 & chc4=1) | (c4=0 & chc4=0)): 1;
+      c3=1 & c1=1 & chc1=1 & c2=1 & chc2=1 & c4=0 & chc4=1 & chc1=1 & chc2=1 & chc3=0 & chc4=1: 1;
+      c2=0 & chc2=1 & ((c1=1 & chc1=1) | (c1=0 & chc1=0)) & ((c3=1 & chc3=1) | (c3=0 & chc3=0)) & ((c4=1 & chc4=1) | (c4=0 & chc4=0)): 1;
+      c3=1 & c1=1 & chc1=1 & c2=1 & chc2=1 & c4=0 & chc4=1 & chc1=1 & chc2=1 & chc3=0 & chc4=1: 1;
+      c3=0 & chc3=1 & ((c1=1 & chc1=1) | (c1=0 & chc1=0)) & ((c2=1 & chc2=1) | (c2=0 & chc2=0)) & ((c4=1 & chc4=1) | (c4=0 & chc4=0)): 1;
+      c4=0 & chc4=1 & ((c1=1 & chc1=1) | (c1=0 & chc1=0)) & ((c2=1 & chc2=1) | (c2=0 & chc2=0)) & ((c3=1 & chc3=1) | (c3=0 & chc3=0)): 1;
+      c3=1 & c1=1 & chc1=1 & c2=1 & chc2=1 & c4=0 & chc4=1 & chc1=1 & chc2=1 & chc3=0 & chc4=1: 1;
+      TRUE: 0;
+    esac;
+
+INVAR !(c1=1 & c2=1 & c3=1 & c4=1)
+
+INVAR !(c1=1 & c2=1 & c3=0 & c4=1)
+
+INVAR !(c1=1 & c2=0 & c3=1 & c4=1)
+
+INVAR !(c1=0 & c2=1 & c3=1 & c4=1)
+
+INVAR !(c1=1 & c2=0 & c3=0 & c4=1)
+
+INVAR !(c1=0 & c2=1 & c3=0 & c4=1)
+
+INVAR !(c1=0 & c2=0 & c3=1 & c4=1)
+
+INVAR !(c1=1 & c2=1 & c3=1 & c4=0)
+
+INVAR !(c1=0 & c2=0 & c3=0 & c4=1)
+
+INVAR !(c1=1 & c2=1 & c3=0 & c4=0)
+
+INVAR !(c1=1 & c2=0 & c3=1 & c4=0)
+
+INVAR !(c1=0 & c2=1 & c3=1 & c4=0)
+
+INVAR !(c1=1 & c2=0 & c3=0 & c4=0)
+
+INVAR !(c1=0 & c2=1 & c3=0 & c4=0)
+
+INVAR !(c1=0 & c2=0 & c3=1 & c4=0)
+
+INVAR !(c1=0 & c2=0 & c3=0 & c4=0)
+
+SPEC EF (gch=1)

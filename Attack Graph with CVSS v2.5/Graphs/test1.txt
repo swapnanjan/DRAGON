@@ -1,0 +1,35 @@
+# Auto Generated Attack Graph file from .gml file
+pnodes : superuser(2), execute(2), trust(2-0), trust(2-1), execute(1), trust(1-0);
+enodes : local_bof(2), rsh(0-2), rsh(1-2), ftp_rhosts(0-2), AND(Swap), ftp_rhosts(1-2), rsh(0-1), sshd_bof(0-1), ftp_rhosts(0-1), AND(Swap);
+lnodes : rsh_c(0-2), rsh_c(1-2), ftp_c(0-2), ftp_c(1-2), rsh_c(0-1), ssh_c(0-1), ftp_c(0-1), Leaf(Swap);
+root : superuser(2)
+goals:
+superuser(2)-->local_bof(2);
+local_bof(2)-->execute(2);
+execute(2)-->rsh(0-2);
+execute(2)-->rsh(1-2);
+execute(2)-->AND(Swap)
+rsh(0-2)-->trust(2-0);
+rsh(1-2)-->trust(2-1);
+rsh(1-2)-->execute(1);
+trust(2-0)-->ftp_rhosts(0-2);
+trust(2-1)-->ftp_rhosts(1-2);
+execute(1)-->rsh(0-1);
+execute(1)-->sshd_bof(0-1);
+ftp_rhosts(1-2)-->execute(1);
+rsh(0-1)-->trust(1-0);
+trust(1-0)-->ftp_rhosts(0-1);
+sloag
+leaves:
+rsh(0-2)-->rsh_c(0-2);
+rsh(1-2)-->rsh_c(1-2);
+ftp_rhosts(0-2)-->ftp_c(0-2);
+ftp_rhosts(1-2)-->ftp_c(1-2);
+rsh(0-1)-->rsh_c(0-1);
+AND(Swap)-->rsh_c(0-1);
+sshd_bof(0-1)-->ssh_c(0-1);
+ftp_rhosts(0-1)-->ftp_c(0-1);
+ftp_c(0-1)-->Leaf(Swap);
+AND(Swap)-->ftp_c(0-1);
+sevael
+END

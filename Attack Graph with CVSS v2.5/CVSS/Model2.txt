@@ -1,0 +1,11 @@
+# Lo=1, Med=2, Hi=3
+# Root Node always has configuration: [4,4,4]
+START
+p1:[4,4,4]
+p2:[1,2,3]
+p3:[2,2,1]
+p4:[1,2,1]
+p5:[1,1,1]
+p6:[3,2,3]
+c11:[2,2,1]
+END
